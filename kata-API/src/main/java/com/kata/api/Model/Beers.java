@@ -28,4 +28,6 @@ public class Beers {
         private String descript;
         private Integer add_user;
         private LocalDateTime last_mod;
+
+
 }
