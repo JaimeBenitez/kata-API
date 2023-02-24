@@ -1,10 +1,10 @@
-package com.example.kataspring;
+package com.kata.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class KataSpringApplicationTests {
+class KataApiApplicationTests {
 
 	@Test
 	void contextLoads() {
