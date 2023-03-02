@@ -1,17 +1,14 @@
 package com.kata.api.Controller;
 
-import com.kata.api.Model.Beers;
 import com.kata.api.Model.BeerRepository;
+import com.kata.api.Model.Beers;
 import errors.BeerNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -82,7 +79,6 @@ public class BeerController {
     @PutMapping("/beer/{id}")
     public Beers updateBeer(@RequestBody Beers newBeer, @PathVariable Long id) {
         return beerRepository.findById(id).map(b -> {
-            b.setId(newBeer.getId());
             b.setName(newBeer.getName());
             b.setAbv(newBeer.getAbv());
             b.setIbu(newBeer.getIbu());
