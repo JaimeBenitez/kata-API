@@ -2,6 +2,8 @@ package com.kata.api.Controller;
 
 import com.kata.api.Model.BreweryRepository;
 import com.kata.api.Model.Breweries;
+import errors.BeerNotFoundException;
+import errors.BrewerieNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,10 +31,11 @@ public class BreweriesController {
      * Obtenemos una cerveceria en base a su ID
      *
      * @param id
-     * @return Null si no encuentra la cerveceria
+     * @return Error 404 si no encuentra la cerveceria
      */
     @GetMapping("brewery/{id}")
     public Breweries getBreweryById(@PathVariable Long id){
-        return breweryRepository.findById(id).orElse(null);
+
+        return breweryRepository.findById(id).orElseThrow(() -> new BrewerieNotFoundException(id));
     }
 }

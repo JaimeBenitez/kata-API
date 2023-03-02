@@ -2,6 +2,8 @@ package com.kata.api.Controller;
 
 import com.kata.api.Model.StyleRepository;
 import com.kata.api.Model.Styles;
+import errors.BeerNotFoundException;
+import errors.StyleNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,10 +31,11 @@ public class StylesController {
      * Obtenemos un estilo en base a su ID
      *
      * @param id
-     * @return Null si no encuentra el estilo
+     * @return Error 404 si no encuentra el estilo
      */
     @GetMapping("style/{id}")
     public Styles getStyleById(@PathVariable Long id){
-        return styleRepository.findById(id).orElse(null);
+
+        return styleRepository.findById(id).orElseThrow(() -> new StyleNotFoundException(id));
     }
 }

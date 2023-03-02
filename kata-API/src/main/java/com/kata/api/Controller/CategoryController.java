@@ -2,6 +2,8 @@ package com.kata.api.Controller;
 
 import com.kata.api.Model.Categories;
 import com.kata.api.Model.CategoryRepository;
+import errors.BeerNotFoundException;
+import errors.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,10 +31,11 @@ public class CategoryController {
      * Obtenemos una categoria en base a su ID
      *
      * @param id
-     * @return Null si no encuentra la categoria
+     * @return Error 404 si no encuentra la categoria
      */
     @GetMapping("category/{id}")
     public Categories getCategoryById(@PathVariable Long id){
-        return categoryRepository.findById(id).orElse(null);
+
+        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
     }
 }

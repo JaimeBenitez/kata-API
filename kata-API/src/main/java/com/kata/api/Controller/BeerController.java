@@ -2,6 +2,7 @@ package com.kata.api.Controller;
 
 import com.kata.api.Model.Beers;
 import com.kata.api.Model.BeerRepository;
+import errors.BeerNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,33 +38,26 @@ public class BeerController {
      * Obtenemos una cerveza en base a su ID
      *
      * @param id
-     * @return Null si no encuentra la cerveza
+     * @return Error 404 si no encuentra la cerveza
      */
     @GetMapping("beer/{id}")
     public Beers getBeerById(@PathVariable Long id){
-        Optional<Beers> beer = beerRepository.findById(id);
-        if(beer.isPresent()){
-            return beer.get();
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cerveza con ID" + id + " no encontrada");
-        }
+
+        return beerRepository.findById(id)
+                .orElseThrow(() -> new BeerNotFoundException(id));
     }
 
     /**
      * Eliminamos una cerveza en base a su ID
      *
      * @param id
-     * @return cerveza eliminada
+     * @return Código 204 sin contenido
      */
     @DeleteMapping("/beer/{id}")
-    public Beers deleteBeerById(@PathVariable Long id){
-        if(beerRepository.existsById(id)){
-            Beers beer = beerRepository.findById(id).orElse(null);
-            beerRepository.deleteById(id);
-            return beer;
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cerveza con ID" + id + " no encontrada, no pudo ser eliminada");
-        }
+    public ResponseEntity<Void> deleteBeerById(@PathVariable Long id){
+            Beers beer = beerRepository.findById(id).orElseThrow(() -> new BeerNotFoundException(id));
+            beerRepository.delete(beer);
+            return ResponseEntity.noContent().build();
     }
 
     /**
@@ -83,16 +77,22 @@ public class BeerController {
      *
      * @param newBeer
      * @param id
-     * @return cerveza actualizada
+     * @return cerveza actualizada, 404 si no se encuentra la cerveza
      */
     @PutMapping("/beer/{id}")
-    public Beers updateBeer(@RequestBody Beers newBeer, @PathVariable Long id){
-        if(beerRepository.existsById(id)){
-            newBeer.setId(id);
-            newBeer.setLast_mod(LocalDateTime.now());
-            return beerRepository.save(newBeer);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cerveza con ID" + id + " no encontrada, no pudo ser actualizada");
-        }
+    public Beers updateBeer(@RequestBody Beers newBeer, @PathVariable Long id) {
+        return beerRepository.findById(id).map(b -> {
+            b.setId(newBeer.getId());
+            b.setName(newBeer.getName());
+            b.setAbv(newBeer.getAbv());
+            b.setIbu(newBeer.getIbu());
+            b.setSrm(newBeer.getSrm());
+            b.setUpc(newBeer.getUpc());
+            b.setFilepath(newBeer.getFilepath());
+            b.setDescript(newBeer.getDescript());
+            b.setAdd_user(newBeer.getAdd_user());
+            b.setLast_mod(LocalDateTime.now());
+            return beerRepository.save(b);
+        }).orElseThrow(() -> new BeerNotFoundException(id));
     }
 }
