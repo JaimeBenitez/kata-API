@@ -1,5 +1,6 @@
 package com.kata.api.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class Styles {
     @Id
     @GeneratedValue
     private long id;
+
     @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name="cat_id")

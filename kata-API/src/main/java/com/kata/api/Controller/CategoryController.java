@@ -1,9 +1,8 @@
 package com.kata.api.Controller;
 
 import com.kata.api.Model.Categories;
-import com.kata.api.Model.CategoryRepository;
-import errors.BeerNotFoundException;
-import errors.CategoryNotFoundException;
+import com.kata.api.Repository.CategoryRepository;
+import com.kata.api.errors.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

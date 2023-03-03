@@ -1,21 +1,29 @@
 package com.kata.api.Controller;
 
-import com.kata.api.Model.StyleRepository;
+
+import com.kata.api.Repository.CategoryRepository;
+import com.kata.api.Repository.StyleRepository;
 import com.kata.api.Model.Styles;
-import errors.BeerNotFoundException;
-import errors.StyleNotFoundException;
+import com.kata.api.dto.StyleDTO;
+import com.kata.api.dto.converter.StyleDTOConverter;
+import com.kata.api.errors.StyleNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 public class StylesController {
 
     private final StyleRepository styleRepository;
+    private final CategoryRepository categoryRepository;
+    private final StyleDTOConverter styleDTOConverter;
+
 
     /**
      * Obtenemos todos los estilos
@@ -23,8 +31,17 @@ public class StylesController {
      * @return lista de estilos
      */
     @GetMapping("/styles")
-    public List<Styles> getAllStyles(){
-        return styleRepository.findAll();
+    public ResponseEntity<List<?>> getAllStyles(){
+
+        List<Styles> styles = styleRepository.findAll();
+        if(styles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            List<StyleDTO> dtoList =
+                    styles.stream().map(styleDTOConverter::convertToDTO).collect(Collectors.toList());
+            return ResponseEntity.ok(dtoList);
+        }
+
     }
 
     /**

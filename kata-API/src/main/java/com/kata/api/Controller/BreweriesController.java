@@ -1,9 +1,8 @@
 package com.kata.api.Controller;
 
-import com.kata.api.Model.BreweryRepository;
+import com.kata.api.Repository.BreweryRepository;
 import com.kata.api.Model.Breweries;
-import errors.BeerNotFoundException;
-import errors.BrewerieNotFoundException;
+import com.kata.api.errors.BrewerieNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

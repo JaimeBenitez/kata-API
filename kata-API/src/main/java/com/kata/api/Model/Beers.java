@@ -1,5 +1,6 @@
 package com.kata.api.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -20,12 +21,18 @@ public class Beers {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-        private Long breweryId;
+        @ManyToOne
+        @NotFound(action = NotFoundAction.IGNORE)
+        @JoinColumn(name="brewery_id")
+        private Breweries brewery;
         private String name;
+
+
         @ManyToOne
         @NotFound(action = NotFoundAction.IGNORE)
         @JoinColumn(name="cat_id")
         private Categories category;
+
         @ManyToOne
         @NotFound(action = NotFoundAction.IGNORE)
         @JoinColumn(name="style_id")
