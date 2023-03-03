@@ -1,3 +1,7 @@
+## Colaboradores 
+
+Trabajo realizado por Jaime Benitez Acien y Jose Luis Tocino Rojo
+
 > **Note**
 > Si alguien quiere usar docker, docker-compose, adelante.
 > Pero ahora mismo no es nuestro objetivo.
@@ -85,11 +89,4 @@ Ir más lejos
 |`/style/{id}`     | Mostrar el estilo -style- `{id}`        | GET      |
 
 
-## Colaboradores (idiomas en orden alfabético)
-
-[Laravel](https://github.com/SaphireVert/Kata-API/tree/saphirevert/laravel) → [![saphirevert-repos][saphirevert-shield]][saphirevert-url]
-
-
-[saphirevert-shield]: https://badgen.net/badge/Github/SaphireVert/green?icon=https://svgshare.com/i/Srf.svg
-[saphirevert-url]: https://github.com/saphirevert/
 
