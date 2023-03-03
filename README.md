@@ -1,6 +1,6 @@
 ## Colaboradores 
 
-Trabajo realizado por Jaime Benitez Acien y Jose Luis Tocino Rojo
+Trabajo realizado por **Jaime Benitez Acien** y **Jose Luis Tocino Rojo**
 
 > **Note**
 > Si alguien quiere usar docker, docker-compose, adelante.
